@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>New Hijab & Tops Collection</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, sans-serif; background: #fff7fa; color: #333; }
+    header { background: #923c68; color: white; padding: 22px 10px; text-align: center; }
+    header h1 { font-size: 24px; margin: 5px; }
+    nav { background: #682847; padding: 12px; text-align: center; }
+    nav a { color: white; margin: 10px; text-decoration: none; }
+    .hero { text-align: center; padding: 25px 10px; background: #f8dfeb; }
+    .products { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding: 12px; }
+    .product { background: white; border-radius: 10px; padding: 10px; text-align: center; box-shadow: 0 2px 7px #e5ced9; }
+    .product img { width: 100%; height: 145px; object-fit: cover; border-radius: 8px; }
+    button { background: #923c68; color: white; border: none; border-radius: 6px; padding: 10px; cursor: pointer; }
+    #cart { margin: 15px; padding: 15px; background: white; border-radius: 10px; }
+    input, textarea { width: 100%; padding: 10px; margin: 6px 0; border: 1px solid #ccc; border-radius: 5px; }
+    footer { background: #682847; color: white; text-align: center; padding: 18px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>New Hijab & Tops Collection</h1>
+    <p>আপনার পছন্দের হিজাব ও টপস একসাথে</p>
+  </header>
+  <nav>
+    <a href="#home">হোম</a>
+    <a href="#products">পণ্য</a>
+    <a href="#cart">কার্ট</a>
+  </nav>
+  <section class="hero" id="home">
+    <h2>নতুন কালেকশন এসেছে!</h2>
+    <p>সুন্দর হিজাব ও স্টাইলিশ টপস কিনুন সহজেই।</p>
+  </section>
+  <h2 style="text-align:center" id="products">আমাদের পণ্য</h2>
+  <section class="products">
+    <div class="product">
+      <img src="https://placehold.co/300x250/f3d5e4/66334e?text=Hijab" alt="হিজাব">
+      <h3>সুন্দর হিজাব</h3><p>মূল্য: ৳২৫০</p>
+      <button onclick="add('সুন্দর হিজাব',250)">কার্টে যোগ করুন</button>
+    </div>
+    <div class="product">
+      <img src="https://placehold.co/300x250/e8d9f4/66334e?text=Tops" alt="টপস">
+      <h3>স্টাইলিশ টপস</h3><p>মূল্য: ৳৫৫০</p>
+      <button onclick="add('স্টাইলিশ টপস',550)">কার্টে যোগ করুন</button>
+    </div>
+  </section>
+  <section id="cart">
+    <h2>🛒 আপনার কার্ট</h2>
+    <div id="items">এখনো কোনো পণ্য যোগ করা হয়নি।</div>
+    <h3 id="total">মোট: ৳০</h3>
+    <h2>অর্ডার ফর্ম</h2>
+    <form onsubmit="order(event)">
+      <input id="name" placeholder="আপনার নাম" required>
+      <input id="phone" type="tel" placeholder="মোবাইল নম্বর" required>
+      <textarea id="address" placeholder="সম্পূর্ণ ডেলিভারি ঠিকানা" required></textarea>
+      <button type="submit">WhatsApp-এ অর্ডার পাঠান</button>
+    </form>
+    <p>অর্ডার পাঠাতে আপনার ফোনে WhatsApp থাকতে হবে।</p>
+  </section>
+  <footer>ধন্যবাদ আমাদের দোকানে আসার জন্য ❤️</footer>
+  <script>
+    const cart = [];
+    function add(name, price) {
+      cart.push({name, price});
+      show();
+    }
+    function show() {
+      document.getElementById('items').innerHTML = cart.length
+        ? cart.map((p,i) => `${i+1}. ${p.name} — ৳${p.price}`).join('<br>')
+        : 'এখনো কোনো পণ্য যোগ করা হয়নি।';
+      document.getElementById('total').textContent =
+        'মোট: ৳' + cart.reduce((sum,p) => sum+p.price,0);
+    }
+    function order(e) {
+      e.preventDefault();
+      if (!cart.length) {
+        alert('প্রথমে কার্টে পণ্য যোগ করুন।');
+        return;
+      }
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+      const address = document.getElementById('address').value;
+      const products = cart.map(p => p.name+' ৳'+p.price).join(', ');
+      const message = `নতুন অর্ডার\nনাম: ${name}\nফোন: ${phone}\nঠিকানা: ${address}\nপণ্য: ${products}\nমোট: ৳${cart.reduce((s,p)=>s+p.price,0)}`;
+      alert('WhatsApp অর্ডার চালু করতে পরের ধাপে দোকানের নম্বর সেট করতে হবে।');
+    }
+  </script>
+</body>
+</html>
